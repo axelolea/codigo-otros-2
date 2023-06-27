@@ -22,6 +22,10 @@ body {
 }
 
 .elemento-lista {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 15px; */
   color: #4b1248;
   font-family: Verdana;
   margin: 10px 0;

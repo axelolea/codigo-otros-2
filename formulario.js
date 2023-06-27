@@ -1,97 +1,68 @@
-var formulario = document.querySelector("#form")
-
-formulario.onsubmit = function(e) {
-
-  e.prevent();
-  
-  var n = formulario.elements[0]
-  var e = formulario.elements[1]
-  var na = formulario.elements[2]
-
-  var nombre = n.value
-  var edad = e.value
-
-  var i = na.selectedIndex
-  var nacionalidad = na.options[i].value
-  console.log(nombre, edad)
-  console.log(nacionalidad)
-
-  if (nombre.length === 0) {
-    n.classList.add("error")
-  }
-  if (edad < 18 || edad > 120) {
-    e.classList.add("error")
-  }
-
-if (nombre.length > 0 
-  && (edad > 18 
-    && edad < 120) ) {
-  agregarInvitado(nombre, edad, nacionalidad)
-  }
+// usar variables const, para evitar problemas de inmutabilidad
+const formulario = document.querySelector("#formulario")
+const nacionalidades = {
+  ar: "Argentina",
+  mx: "Mexicana",
+  pe: "Venezolana",
+  ve: "Peruana",
 }
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-document.body.appendChild(corteLinea)
-document.body.appendChild(botonBorrar);
+
+formulario.addEventListener('submit', (event) => {
+
+  // Colocar un prevent default
+  event.preventDefault();
+  
+  // usar un form data para manipular mejor la data 
+  const formData = new FormData(formulario);
+
+  // Obtener valores del form
+  const nombre = formData.get('name')
+  const edad = formData.get('age')
+  const nacionalidad = formData.get('nationality')
+
+  // Validaciones mas limpias y agrupadas
+  if (nombre.length === 0) n.classList.add("error")
+
+  if (edad < 18 || edad > 120) e.classList.add("error")
+
+  if (nombre.length > 0 && edad < 120 )
+    agregarInvitado(nombre, edad, nacionalidad);
+
+})
+
+// Tener ya declrado fuera de la funcion el invitado container 
+const invitadosContainer = document.getElementById("invitadosComtainer")
 
 function agregarInvitado(nombre, edad, nacionalidad) {
 
-  if (nacionalidad === "ar") {
-    nacionalidad = "Argentina"
+  const elementoLista = document.createElement("div")
+  elementoLista.classList.add("elemento-lista")
+  invitadosContainer.appendChild(elementoLista)
+
+  // Todo: Retirar funcion fuera del contexto de la funcion padre
+  function crearElemento(descripcion, valor) {
+    const container = document.createElement("div")
+    const spanNombre = document.createElement("span")
+    const inputNombre = document.createElement("input")
+    spanNombre.textContent = `${descripcion}: `
+    inputNombre.value = valor 
+    container.appendChild(spanNombre)
+    container.appendChild(inputNombre)
+    elementoLista.appendChild(container)
   }
-  else if (nacionalidad === "mx") {
-    nacionalidad = "Mexicana"
-  }
-  else if (nacionalidad === "vnzl") {
-    nacionalidad = "Venezolana"
-  }
-  else if (nacionalidad === "per") {
-    nacionalidad = "Peruana"
-  }
 
-var lista = document.getElementById("lista-de-invitados")
-
-var elementoLista = document.createElement("div")
-elementoLista.classList.added("elemento-lista")
-lista.appendChild(elementoLista)
-
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = "Nombre: "
-inputNombre.value = nombre 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
-
-function crearElemento(descripcion, valor) {
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = descripcion + ": "
-inputNombre.value = valor 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
-}
-
-crearElemento("Nombre", nombre)
-crearElemento("Edad", edad)
-crearElemento("Nacionalidad", nacionalidad)
+  crearElemento("Nombre", nombre)
+  crearElemento("Edad", edad)
+  crearElemento("Nacionalidad", nacionalidades[nacionalidad])
 
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-elementoLista.appendChild(corteLinea)
-elementoLista.appendChild(botonBorrar);
+  // Borrando elementos innesarios 
+  const botonBorrar = document.createElement("button")
+  botonBorrar.textContent = "Eliminar invitado"
+  elementoLista.appendChild(botonBorrar);
 
- botonBorrar.onclick = function() {
-// this.parentNode.style.display = 'none';
-botonBorrar.parentNode.remove()
+  botonBorrar.onclick = function() {
+    botonBorrar.parentNode.remove()
   }
 }

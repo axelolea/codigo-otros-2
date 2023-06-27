@@ -12,29 +12,40 @@
   <h1>Bienvenidos a mi fiesta</h1>
   <h2>Por favor, confirmar asistencia:</h2>
 
-  <form class="formulario">
-    Nombre <input type="text" name="name" id="name">
-    <br />
-    Edad <input type="number" name="age" id="age">
-    <br />
+  <form class="formulario" id="formulario">
+    <!-- Falta de integrar labels en inputs -->
+    <label for="name">
+      Nombre <input type="text" name="name" id="name">
+    </label>
+    <!-- <br /> procurar no usar br, agregar estilos -->
+    <label for="age">
+      Edad <input type="number" name="age" id="age">
+    </label>
+    <!-- <br /> -->
 
-    Nacionalidad
-    <select name="nationality" id="nationality">
-      <option value="ar">Argentina</option>
-      <option value="mx">Mexicana</option>
-      <option value="per">Peruana</option>
-      <option value="vnzl">Venezolana</option>
-    </select>
-    <br />
-    <input type="submit">
+    <label for="nationality">
+      Nacionalidad
+      <select name="nationality" id="nationality">
+        <!-- Usar el value con el mismo estandar (ISO 3166-1) de la abreviacion de paises -->
+        <option value="ar">Argentina</option>
+        <option value="mx">Mexicana</option>
+        <option value="pe">Peruana</option>
+        <option value="ve">Venezolana</option>
+      </select>
+    </label>
+    <!-- Colocar un valor al input para tener mejor identificado el submit del form -->
+    <input type="submit" value="Agregar">
   </form>
 
-  <div>
-    <h2>Lista de invitados</h2>
+  <!-- Sub dividir y hacer anidaciones de manera mas limpia -->
+  <h2>Lista de invitados</h2>
+  <!-- Colocar un id al container de los invitados -->
+  <div id="invitadosComtainer">
 
   </div>
 
-  <script src="../formulario.js"></script>
+  <!-- Colocar bien la ruta relativa -->
+  <script src="./formulario.js"></script>
 </body>
 
 </html>
